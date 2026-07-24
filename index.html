@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Confirmação de Presença — Aniversário da Clarinha 🦇</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.0.0/dist/tabler-icons.min.css"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --vp: #8b1fc8; --vp-light: rgba(139,31,200,.1); --vp-border: rgba(139,31,200,.28);
+    --vp-btn-hover: #7918b5; --vp-pink: #c840e8;
+    --bg: #f4f0fa; --surface: #ffffff; --surface-1: #f9f6fd;
+    --text: #1a0a2e; --text-sec: #5a4a72; --text-muted: #9080a8;
+    --border: #e2d8f0; --border-strong: #c8b8e0;
+    --radius: 8px; --danger: #dc2626; --danger-bg: #fef2f2; --danger-border: #fca5a5;
+    --success: #16a34a;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0d0618; --surface: #1a0a2e; --surface-1: #221038;
+      --text: #f0e8ff; --text-sec: #c9b0e8; --text-muted: #7a6898;
+      --border: #2e1848; --border-strong: #4a2870;
+    }
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 1.5rem 1rem 3rem;
+  }
+
+  .wrap { max-width: 520px; margin: 0 auto; }
+
+  /* ── Hero ── */
+  .hero { background: #120222; border-radius: 16px; overflow: hidden; margin-bottom: 1.25rem; }
+  .hero-art { display: block; width: 100%; }
+  .hero-body { padding: 1.5rem 1.5rem 1.75rem; text-align: center; background: #120222; }
+
+  .hero-eyebrow { font-size: 11px; color: #c9a0ff; margin-bottom: 6px; letter-spacing: .1em; text-transform: uppercase; }
+  .hero-title { font-size: 25px; font-weight: 600; color: #fff; margin-bottom: 16px; line-height: 1.25; }
+  .hero-meta { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .hero-meta span { font-size: 13px; color: #e0d0ff; display: flex; align-items: center; gap: 6px; }
+  .hero-meta i { font-size: 14px; color: #c840e8; }
+  .hero-badge {
+    display: inline-block; margin-top: 16px; padding: 7px 18px;
+    background: rgba(200,64,232,.2); border: 0.5px solid rgba(200,64,232,.45);
+    border-radius: 99px; font-size: 12px; color: #f0d8ff; letter-spacing: .03em;
+  }
+
+  /* ── Card ── */
+  .card {
+    background: var(--surface);
+    border-radius: 12px;
+    border: 0.5px solid var(--border);
+    padding: 1.5rem;
+  }
+
+  /* ── Fields ── */
+  label.lbl { display: block; font-size: 13px; font-weight: 500; color: var(--text-sec); margin-bottom: 6px; }
+  label.lbl .req { color: var(--vp-pink); }
+  label.lbl .opt { font-weight: 400; color: var(--text-muted); }
+  .mb { margin-bottom: 1.1rem; }
+  .mb-l { margin-bottom: 1.25rem; }
+
+  .grid2 { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 10px; }
+  @media (max-width: 420px) { .grid2 { grid-template-columns: 1fr; } }
+
+  input[type="text"], input[type="email"], input[type="tel"], input[type="url"] {
+    width: 100%;
+    padding: 8px 12px;
+    border: 0.5px solid var(--border-strong);
+    border-radius: var(--radius);
+    font-size: 14px;
+    color: var(--text);
+    background: var(--surface-1);
+    outline: none;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  input:focus {
+    border-color: var(--vp);
+    box-shadow: 0 0 0 3px rgba(139,31,200,.12);
+  }
+
+  /* ── Radio cards ── */
+  .radio-row { display: flex; gap: 10px; }
+  .radio-card {
+    display: flex; align-items: center; gap: 8px; cursor: pointer;
+    padding: 10px 14px; border: 0.5px solid var(--border-strong);
+    border-radius: var(--radius); flex: 1; justify-content: center;
+    font-size: 13px; color: var(--text); transition: border-color .15s, background .15s;
+    user-select: none;
+  }
+  .radio-card input[type="radio"] { width: 15px; height: 15px; accent-color: var(--vp); flex-shrink: 0; }
+  .radio-card.active-sim { border-color: var(--vp); background: var(--vp-light); }
+  .radio-card.active-nao { border-color: var(--border-strong); background: var(--surface-1); }
+
+  /* ── Faixas ── */
+  .faixa-box {
+    background: rgba(139,31,200,.07);
+    border: 0.5px solid var(--vp-border);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+  }
+  .faixa-title { font-size: 13px; font-weight: 500; color: var(--vp); margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
+  .faixa-row { display: flex; align-items: center; justify-content: space-between; padding: 9px 0; }
+  .faixa-row + .faixa-row { border-top: 0.5px solid rgba(139,31,200,.15); }
+  .faixa-label { font-size: 14px; color: var(--text); }
+  .faixa-sub   { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+  .counter { display: flex; align-items: center; gap: 10px; }
+  .btn-c {
+    width: 34px; height: 34px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    border: 0.5px solid var(--border-strong); background: var(--surface);
+    cursor: pointer; color: var(--text); font-size: 14px;
+    transition: background .12s;
+  }
+  .btn-c:hover { background: var(--surface-1); }
+  .cnt-val { font-size: 16px; font-weight: 500; min-width: 24px; text-align: center; color: var(--text); }
+  .total-row {
+    margin-top: 10px; padding: 8px 12px; background: var(--surface);
+    border-radius: var(--radius); display: flex; justify-content: space-between; align-items: center;
+  }
+  .total-lbl { font-size: 13px; color: var(--text-sec); }
+  .total-val { font-size: 16px; font-weight: 600; color: var(--vp); }
+
+  /* ── Error ── */
+  .err-box {
+    display: none; padding: 9px 12px;
+    background: var(--danger-bg); border: 0.5px solid var(--danger-border);
+    border-radius: var(--radius); margin-bottom: 1rem;
+    font-size: 13px; color: var(--danger);
+  }
+
+  /* ── Button ── */
+  .btn-main {
+    width: 100%; padding: 13px; background: var(--vp); color: #fff;
+    border: none; border-radius: var(--radius); font-size: 15px; font-weight: 500;
+    cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;
+    transition: background .12s;
+  }
+  .btn-main:hover:not(:disabled) { background: var(--vp-btn-hover); }
+  .btn-main:disabled { background: #999; cursor: not-allowed; }
+
+  /* ── Divider ── */
+  .divider { border: none; border-top: 0.5px solid var(--border); margin: 1.25rem 0 1rem; }
+
+  /* ── Success ── */
+  .suc-card {
+    display: none; background: var(--surface); border-radius: 12px;
+    border: 0.5px solid var(--border); padding: 2.5rem 1.5rem; text-align: center;
+  }
+  .suc-icon { font-size: 52px; margin-bottom: 1rem; }
+  .suc-title { font-size: 18px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+  .suc-msg { font-size: 14px; color: var(--text-sec); margin-bottom: 1.5rem; line-height: 1.7; }
+  .sheet-badge {
+    display: none; padding: 8px 12px; background: rgba(139,31,200,.08);
+    border: 0.5px solid var(--vp-border); border-radius: var(--radius);
+    margin-bottom: 1rem; font-size: 12px; color: var(--vp);
+  }
+  .btn-reset {
+    padding: 8px 20px; font-size: 13px;
+    border: 0.5px solid var(--border-strong); border-radius: var(--radius);
+    background: var(--surface); cursor: pointer; color: var(--text);
+  }
+
+  /* ── Footer ── */
+  footer { text-align: center; margin-top: 2rem; font-size: 12px; color: var(--text-muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ── Hero: cena noturna gótica (arte original) ── -->
+  <div class="hero">
+    <svg class="hero-art" viewBox="0 0 520 190" aria-hidden="true">
+      <rect width="520" height="190" fill="#1c0533"/>
+      <rect y="0" width="520" height="72" fill="#140326"/>
+
+      <circle cx="428" cy="40" r="26" fill="#f5e3a8"/>
+      <circle cx="418" cy="33" r="4.5" fill="#e8d190" opacity=".55"/>
+      <circle cx="437" cy="47" r="3" fill="#e8d190" opacity=".45"/>
+      <circle cx="431" cy="28" r="2.2" fill="#e8d190" opacity=".4"/>
+
+      <circle cx="26" cy="24" r="1.9" fill="#f0d060" opacity=".9"/>
+      <circle cx="74" cy="12" r="1.2" fill="#fff" opacity=".55"/>
+      <circle cx="118" cy="32" r="1.6" fill="#d4a0ff" opacity=".75"/>
+      <circle cx="163" cy="15" r="1" fill="#fff" opacity=".4"/>
+      <circle cx="206" cy="30" r="1.8" fill="#f0d060" opacity=".8"/>
+      <circle cx="252" cy="11" r="1.3" fill="#d4a0ff" opacity=".6"/>
+      <circle cx="292" cy="27" r="1.5" fill="#f0d060" opacity=".7"/>
+      <circle cx="338" cy="14" r="1.1" fill="#fff" opacity=".45"/>
+      <circle cx="376" cy="30" r="1.7" fill="#d4a0ff" opacity=".65"/>
+      <circle cx="470" cy="16" r="1.4" fill="#f0d060" opacity=".7"/>
+      <circle cx="502" cy="35" r="1.2" fill="#fff" opacity=".5"/>
+      <circle cx="52" cy="48" r="1.1" fill="#d4a0ff" opacity=".45"/>
+      <circle cx="182" cy="52" r="1" fill="#fff" opacity=".3"/>
+      <circle cx="318" cy="50" r="1.2" fill="#f0d060" opacity=".5"/>
+      <text x="96" y="55" font-size="9" fill="#f0d060" opacity=".55" font-family="serif">&#10022;</text>
+      <text x="226" y="49" font-size="7" fill="#fff" opacity=".4" font-family="serif">&#10022;</text>
+      <text x="356" y="56" font-size="8" fill="#d4a0ff" opacity=".5" font-family="serif">&#10022;</text>
+
+      <path d="M0,132 L26,116 L54,124 L84,106 L114,118 L142,110 L170,120 L196,112 L224,122 L252,114 L284,124 L316,112 L348,122 L380,110 L412,120 L444,112 L476,122 L504,114 L520,124 L520,190 L0,190Z" fill="#2a0a4a"/>
+
+      <g fill="#0d0118">
+        <rect x="212" y="72" width="18" height="58"/>
+        <path d="M212,72 L221,54 L230,72Z"/>
+        <rect x="234" y="88" width="52" height="42"/>
+        <rect x="290" y="66" width="22" height="64"/>
+        <path d="M290,66 L301,44 L312,66Z"/>
+        <rect x="196" y="100" width="14" height="30"/>
+        <path d="M196,100 L203,88 L210,100Z"/>
+        <rect x="316" y="98" width="15" height="32"/>
+        <path d="M316,98 L323.5,85 L331,98Z"/>
+        <rect x="232" y="80" width="4" height="10"/>
+        <rect x="240" y="80" width="4" height="10"/>
+        <rect x="248" y="80" width="4" height="10"/>
+        <rect x="256" y="80" width="4" height="10"/>
+        <rect x="264" y="80" width="4" height="10"/>
+        <rect x="272" y="80" width="4" height="10"/>
+        <rect x="280" y="80" width="4" height="10"/>
+      </g>
+
+      <g fill="#f5c842">
+        <rect x="217" y="86" width="7" height="9" rx="3"/>
+        <rect x="296" y="80" width="8" height="10" rx="3.5"/>
+        <rect x="243" y="102" width="8" height="11" rx="3.5"/>
+        <rect x="268" y="102" width="8" height="11" rx="3.5"/>
+        <rect x="255" y="118" width="10" height="12" rx="4"/>
+        <rect x="200" y="112" width="6" height="8" rx="2.5"/>
+      </g>
+
+      <g stroke="#0d0118" stroke-width="2.5" fill="none">
+        <path d="M6,190 L6,150 M22,190 L22,146 M38,190 L38,150 M54,190 L54,146 M70,190 L70,150"/>
+        <path d="M0,152 L76,148"/>
+        <path d="M450,190 L450,150 M466,190 L466,146 M482,190 L482,150 M498,190 L498,146 M514,190 L514,150"/>
+        <path d="M444,152 L520,148"/>
+      </g>
+
+      <g fill="#0d0118">
+        <path d="M92,190 C92,172 100,164 100,164 C100,164 108,172 108,190Z"/>
+        <path d="M416,190 C416,174 423,167 423,167 C423,167 430,174 430,190Z"/>
+      </g>
+
+      <g fill="#c9a0ff" opacity=".85">
+        <g transform="translate(58,62) scale(1.05)">
+          <path d="M18,7 C12,1 2,3 0,7 C3,9 8,8 10,9 L18,7 L26,9 C28,8 33,9 36,7 C34,3 24,1 18,7Z"/>
+          <ellipse cx="18" cy="11" rx="5" ry="3.5"/>
+        </g>
+        <g transform="translate(140,80) scale(.78)" opacity=".7">
+          <path d="M18,7 C12,1 2,3 0,7 C3,9 8,8 10,9 L18,7 L26,9 C28,8 33,9 36,7 C34,3 24,1 18,7Z"/>
+          <ellipse cx="18" cy="11" rx="5" ry="3.5"/>
+        </g>
+        <g transform="translate(372,74) scale(.9)" opacity=".8">
+          <path d="M18,7 C12,1 2,3 0,7 C3,9 8,8 10,9 L18,7 L26,9 C28,8 33,9 36,7 C34,3 24,1 18,7Z"/>
+          <ellipse cx="18" cy="11" rx="5" ry="3.5"/>
+        </g>
+        <g transform="translate(456,66) scale(.62)" opacity=".6">
+          <path d="M18,7 C12,1 2,3 0,7 C3,9 8,8 10,9 L18,7 L26,9 C28,8 33,9 36,7 C34,3 24,1 18,7Z"/>
+          <ellipse cx="18" cy="11" rx="5" ry="3.5"/>
+        </g>
+        <g transform="translate(340,120) scale(.5)" opacity=".45">
+          <path d="M18,7 C12,1 2,3 0,7 C3,9 8,8 10,9 L18,7 L26,9 C28,8 33,9 36,7 C34,3 24,1 18,7Z"/>
+          <ellipse cx="18" cy="11" rx="5" ry="3.5"/>
+        </g>
+      </g>
+    </svg>
+
+    <div class="hero-body">
+      <p class="hero-eyebrow">você está convidado &#10022;</p>
+      <h1 class="hero-title">Aniversário da Clarinha</h1>
+      <div class="hero-meta">
+        <span><i class="ti ti-calendar-event"></i> 23 de agosto de 2026 &middot; 13h00</span>
+        <span><i class="ti ti-map-pin"></i> Salão de Festas Infantil &mdash; ECP</span>
+      </div>
+      <div class="hero-badge">&#129430; Confirme até 10/08/2026 &#129430;</div>
+    </div>
+  </div>
+
+  <!-- ── Form Card ───────────────────────────── -->
+  <div id="form-card" class="card">
+
+    <div class="mb">
+      <label class="lbl" for="nome">Nome completo <span class="req">*</span></label>
+      <input type="text" id="nome" placeholder="Seu nome completo" autocomplete="name"/>
+    </div>
+
+    <div class="grid2 mb-l">
+      <div>
+        <label class="lbl" for="email">E-mail <span class="opt">(opcional)</span></label>
+        <input type="email" id="email" placeholder="seu@email.com" autocomplete="email"/>
+      </div>
+      <div>
+        <label class="lbl" for="tel">WhatsApp <span class="opt">(opcional)</span></label>
+        <input type="tel" id="tel" placeholder="(11) 99999-9999" autocomplete="tel"/>
+      </div>
+    </div>
+
+    <div class="mb-l">
+      <label class="lbl">Confirma presença? <span class="req">*</span></label>
+      <div class="radio-row">
+        <label class="radio-card" id="csim">
+          <input type="radio" name="pres" value="sim" id="rsim" onchange="tP()"/>
+          🎉 Sim, estarei lá!
+        </label>
+        <label class="radio-card" id="cnao">
+          <input type="radio" name="pres" value="nao" id="rnao" onchange="tP()"/>
+          😢 Não poderei ir
+        </label>
+      </div>
+    </div>
+
+    <div id="sfx" style="display:none;" class="mb-l">
+      <div class="faixa-box">
+        <p class="faixa-title">
+          <i class="ti ti-users" style="font-size:15px;"></i>Quantas pessoas virão?
+        </p>
+        <div class="faixa-row">
+          <div>
+            <div class="faixa-label">Até 3 anos</div>
+            <div class="faixa-sub">Bebês e toddlers</div>
+          </div>
+          <div class="counter">
+            <button class="btn-c" onclick="ad('a3',-1)" aria-label="Diminuir crianças até 3 anos"><i class="ti ti-minus"></i></button>
+            <span id="va3" class="cnt-val">0</span>
+            <button class="btn-c" onclick="ad('a3',1)" aria-label="Aumentar crianças até 3 anos"><i class="ti ti-plus"></i></button>
+          </div>
+        </div>
+        <div class="faixa-row">
+          <div>
+            <div class="faixa-label">De 3 a 6 anos</div>
+            <div class="faixa-sub">Pré-escola</div>
+          </div>
+          <div class="counter">
+            <button class="btn-c" onclick="ad('b6',-1)" aria-label="Diminuir crianças de 3 a 6 anos"><i class="ti ti-minus"></i></button>
+            <span id="vb6" class="cnt-val">0</span>
+            <button class="btn-c" onclick="ad('b6',1)" aria-label="Aumentar crianças de 3 a 6 anos"><i class="ti ti-plus"></i></button>
+          </div>
+        </div>
+        <div class="faixa-row">
+          <div>
+            <div class="faixa-label">Acima de 7 anos</div>
+            <div class="faixa-sub">Incluindo adultos</div>
+          </div>
+          <div class="counter">
+            <button class="btn-c" onclick="ad('c7',-1)" aria-label="Diminuir pessoas acima de 7 anos"><i class="ti ti-minus"></i></button>
+            <span id="vc7" class="cnt-val">0</span>
+            <button class="btn-c" onclick="ad('c7',1)" aria-label="Aumentar pessoas acima de 7 anos"><i class="ti ti-plus"></i></button>
+          </div>
+        </div>
+        <div class="total-row">
+          <span class="total-lbl">Total de participantes</span>
+          <span id="tot" class="total-val">0</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="err" class="err-box"></div>
+
+    <button class="btn-main" id="bsub" onclick="enviar()">
+      <i class="ti ti-check"></i>Confirmar presença
+    </button>
+
+  </div>
+
+  <!-- ── Success Card ────────────────────────── -->
+  <div id="suc" class="suc-card">
+    <div id="sico" class="suc-icon"></div>
+    <h2 id="stit" class="suc-title"></h2>
+    <p id="smsg" class="suc-msg"></p>
+    <div id="shok" class="sheet-badge"></div>
+    <button class="btn-reset" onclick="resetar()">Nova resposta</button>
+  </div>
+
+  <footer>&#129430; Aniversário da Clarinha &middot; 23.08.2026 &#129430;</footer>
+</div>
+
+<script>
+/* ============================================================
+   CONFIGURAÇÃO — cole aqui a URL do seu Google Apps Script
+   ============================================================
+   Depois de implantar o Apps Script como "Aplicativo da Web",
+   cole a URL entre as aspas abaixo. Exemplo:
+   const SHEETS_URL = 'https://script.google.com/macros/s/AKfycby0_Wvq9TV4NUlz_M9jVqRoL1D4_Eu1oZ7z602le-eNetgDJ3N1Z7kDUY2jERo1mfxH/exec';
+   Deixe vazio ('') para desativar o envio à planilha.
+   ============================================================ */
+
+const SHEETS_URL = '';
+
+/* ---------- Não é necessário editar abaixo desta linha ---------- */
+
+const V = { a3:0, b6:0, c7:0 };
+
+/* ── Helpers ─────────────────────── */
+function ad(k, d) {
+  V[k] = Math.max(0, V[k] + d);
+  document.getElementById('v' + k).textContent = V[k];
+  document.getElementById('tot').textContent = V.a3 + V.b6 + V.c7;
+}
+
+function tP() {
+  const s = document.getElementById('rsim').checked;
+  const n = document.getElementById('rnao').checked;
+  document.getElementById('sfx').style.display = s ? 'block' : 'none';
+  document.getElementById('csim').className = 'radio-card' + (s ? ' active-sim' : '');
+  document.getElementById('cnao').className = 'radio-card' + (n ? ' active-nao' : '');
+  if (!s) {
+    V.a3 = 0; V.b6 = 0; V.c7 = 0;
+    ['a3','b6','c7'].forEach(k => document.getElementById('v'+k).textContent = '0');
+    document.getElementById('tot').textContent = '0';
+  }
+  hideErr();
+}
+
+function showErr(m) { const e = document.getElementById('err'); e.style.display = 'block'; e.textContent = m; }
+function hideErr() { document.getElementById('err').style.display = 'none'; }
+
+/* ── Submit ──────────────────────── */
+async function enviar() {
+  hideErr();
+  const nome  = document.getElementById('nome').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const tel   = document.getElementById('tel').value.trim();
+  const sim   = document.getElementById('rsim').checked;
+  const nao   = document.getElementById('rnao').checked;
+
+  if (!nome)           { showErr('Preencha o nome completo.'); return; }
+  if (!sim && !nao)    { showErr('Selecione se confirmará presença ou não.'); return; }
+  if (sim && V.a3 + V.b6 + V.c7 === 0) { showErr('Informe ao menos uma pessoa em alguma faixa etária.'); return; }
+
+  const btn = document.getElementById('bsub');
+  btn.disabled = true; btn.textContent = 'Enviando... 🦇';
+
+  let sent = false;
+  if (SHEETS_URL) {
+    try {
+      await fetch(SHEETS_URL, {
+        method: 'POST', mode: 'no-cors',
+        body: new URLSearchParams({
+          timestamp: new Date().toLocaleString('pt-BR'),
+          nome, email, tel,
+          presenca: sim ? 'Confirmado' : 'Não comparece',
+          ate3: V.a3, de3a6: V.b6, acima7: V.c7,
+          total: V.a3 + V.b6 + V.c7
+        })
+      });
+      sent = true;
+    } catch(e) { /* silent fail */ }
+  }
+
+  document.getElementById('form-card').style.display = 'none';
+  document.getElementById('suc').style.display = 'block';
+  const tot = V.a3 + V.b6 + V.c7;
+
+  if (sim) {
+    document.getElementById('sico').textContent = '🧛‍♀️🎉';
+    document.getElementById('stit').textContent = 'Presença confirmada!';
+    const det = [
+      V.a3 > 0 ? V.a3 + ' criança(s) até 3 anos' : '',
+      V.b6 > 0 ? V.b6 + ' criança(s) de 3 a 6 anos' : '',
+      V.c7 > 0 ? V.c7 + ' pessoa(s) acima de 7 anos' : ''
+    ].filter(Boolean).join(', ');
+    document.getElementById('smsg').innerHTML =
+      'Uhuuuu, <strong>' + nome + '</strong>!<br>' +
+      'Nos vemos no castelo! 🦇<br>' +
+      'Você confirmou ' + tot + ' participante' + (tot !== 1 ? 's' : '') + ': ' + det + '.';
+  } else {
+    document.getElementById('sico').textContent = '🦇';
+    document.getElementById('stit').textContent = 'Resposta registrada.';
+    document.getElementById('smsg').innerHTML =
+      'Que pena, <strong>' + nome + '</strong>...<br>' +
+      'Vai fazer falta no castelo! 😢<br>Obrigado por avisar.';
+  }
+
+  if (SHEETS_URL) {
+    const d = document.getElementById('shok');
+    d.style.display = 'block';
+    d.textContent = sent ? '📊 Resposta salva na planilha.' : '⚠ Não foi possível salvar no Google Sheets.';
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '<i class="ti ti-check"></i>Confirmar presença';
+}
+
+/* ── Reset ───────────────────────── */
+function resetar() {
+  ['nome','email','tel'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('rsim').checked = false;
+  document.getElementById('rnao').checked = false;
+  document.getElementById('csim').className = 'radio-card';
+  document.getElementById('cnao').className = 'radio-card';
+  document.getElementById('sfx').style.display = 'none';
+  V.a3 = 0; V.b6 = 0; V.c7 = 0;
+  ['a3','b6','c7'].forEach(k => document.getElementById('v'+k).textContent = '0');
+  document.getElementById('tot').textContent = '0';
+  hideErr();
+  document.getElementById('form-card').style.display = 'block';
+  document.getElementById('suc').style.display = 'none';
+  document.getElementById('shok').style.display = 'none';
+}
+</script>
+</body>
+</html>
